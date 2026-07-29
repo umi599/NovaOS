@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,140 +18,362 @@
     overflow:hidden;
 ">
 
-    <!-- Top Bar -->
-    <div style="
-        position:fixed;
-        top:0;
-        left:0;
-        width:100%;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        backdrop-filter:blur(10px);
-        background:rgba(0,0,0,.25);
-        color:white;
-        padding:8px 0;
-        z-index:1000;
-    ">
 
-        <p style="
-            margin-left:16px;
-            font-weight:bold;
-            background:rgba(255,255,255,.15);
-            padding:6px 14px;
-            border-radius:15px;
-        ">
-            Nova OS
-        </p>
+<!-- Nova OS Boot Screen -->
 
-        <p style="
-            background:rgba(255,255,255,.25);
-            padding:6px 14px;
-            border-radius:15px;
-        ">
-            ☀️ Always Doomscrolling ☁️
-        </p>
+<div id="welcome" style="
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#101010;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    z-index:9999;
+    transition:opacity 1s;
+">
 
-        <p id="clock" style="
-            margin-right:16px;
-            background:rgba(255,255,255,.15);
-            padding:6px 14px;
-            border-radius:15px;
-        ">
-        </p>
 
-    </div>
 
-    <!-- Main Window -->
-    <div style="
-        position:absolute;
-        top:50%;
-        left:50%;
-        transform:translate(-50%,-50%);
-        text-align:center;
-    ">
 
-        <div style="
-            border:4mm ridge rgba(50,200,220,.6);
-            padding:20px;
-            background:rgba(255,255,255,.30);
-            backdrop-filter:blur(10px);
-            border-radius:20px;
-        ">
 
-            <img src="image.png" style="width:100px;height:100px;">
+<h1 style="margin:10px;">
+    Nova OS
+</h1>
 
-            <h1 style="
-                margin-top:10px;
-                background:#01ac37;
-                color:white;
-                border-radius:10px;
-                padding:8px;
-            ">
-                Nova OS
-            </h1>
 
-            <h2>Welcome to Nova</h2>
+<p id="loadingText">
+    Starting Nova OS...
+</p>
 
-            <h3>Introduction</h3>
 
-            <p id="greeting" style="
-                font-size:20px;
-                font-weight:bold;
-            ">
-            </p>
 
-            <p>I love watching romance anime in my free time.</p>
+<div style="
+    width:250px;
+    height:8px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
+">
 
-            <br>
 
-            <a href="https://www.tiktok.com/@gurbet76769899?is_from_webapp=1&sender_device=pc" target="_blank">
-                TikTok
-            </a>
+<div id="progress" style="
+    width:0%;
+    height:100%;
+    background:#01ac37;
+    transition:1s;
+">
+</div>
 
-            &nbsp;&nbsp;&nbsp;
 
-            <a href="https://www.youtube.com/@Umizoomi99" target="_blank">
-                YouTube
-            </a>
+</div>
 
-        </div>
 
-    </div>
+</div>
 
-    <script>
-        function updateNovaOS() {
-            const now = new Date();
 
-            // Live Clock
-            document.getElementById("clock").textContent =
-                now.toLocaleDateString() + " " +
-                now.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit"
-                });
 
-            // Greeting
-            const hour = now.getHours();
-            let greeting = "";
 
-            if (hour >= 5 && hour < 12) {
-                greeting = "🌅 Good Morning!";
-            } else if (hour >= 12 && hour < 15) {
-                greeting = "☀️ Good Midday!";
-            } else if (hour >= 15 && hour < 18) {
-                greeting = "🌞 Good Afternoon!";
-            } else {
-                greeting = "🌙 Good Night!";
-            }
+<!-- Taskbar -->
 
-            document.getElementById("greeting").textContent = greeting;
-        }
+<div style="
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(12px);
+    background:rgba(0,0,0,.25);
+    color:white;
+    padding:8px 0;
+    z-index:1000;
+">
 
-        updateNovaOS();
-        setInterval(updateNovaOS, 1000);
-    </script>
+
+<p style="
+    margin-left:16px;
+    font-weight:bold;
+    background:rgba(255,255,255,.15);
+    padding:6px 14px;
+    border-radius:15px;
+">
+    Nova OS
+</p>
+
+
+
+<p style="
+    background:rgba(255,255,255,.25);
+    padding:6px 14px;
+    border-radius:15px;
+">
+    ☀️ Always Doomscrolling ☁️
+</p>
+
+
+
+<p id="clock" style="
+    margin-right:16px;
+    background:rgba(255,255,255,.15);
+    padding:6px 14px;
+    border-radius:15px;
+">
+</p>
+
+
+</div>
+
+
+
+
+<!-- Desktop Window -->
+
+<div style="
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+">
+
+
+<div style="
+    border:4mm ridge rgba(50,200,220,.6);
+    padding:25px;
+    background:rgba(255,255,255,.30);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    min-width:400px;
+">
+
+
+<img src="image.png" style="
+    width:120px;
+    height:120px;
+">
+
+
+
+<h1 style="
+    background:#01ac37;
+    color:white;
+    border-radius:10px;
+    padding:10px;
+">
+    Nova OS
+</h1>
+
+
+
+<h2>
+Welcome to Nova
+</h2>
+
+
+
+<p id="greeting" style="
+    font-size:22px;
+    font-weight:bold;
+">
+</p>
+
+
+
+<p>
+I love watching romance anime in my free time.
+</p>
+
+
+
+<br>
+
+
+
+<a href="https://www.tiktok.com/@gurbet76769899?is_from_webapp=1&sender_device=pc" target="_blank">
+TikTok
+</a>
+
+
+&nbsp;&nbsp;&nbsp;
+
+
+<a href="https://www.youtube.com/@Umizoomi99" target="_blank">
+YouTube
+</a>
+
+
+
+</div>
+
+</div>
+
+
+
+
+<script>
+
+
+function updateNovaOS() {
+
+
+const now = new Date();
+
+
+
+document.getElementById("clock").textContent =
+
+now.toLocaleDateString() + " " +
+
+now.toLocaleTimeString([], {
+
+hour:"2-digit",
+
+minute:"2-digit",
+
+second:"2-digit"
+
+});
+
+
+
+
+const hour = now.getHours();
+
+
+let greeting = "";
+
+
+
+if(hour >=5 && hour <12){
+
+greeting="🌅 Good Morning!";
+
+}
+
+else if(hour >=12 && hour <15){
+
+greeting="☀️ Good Midday!";
+
+}
+
+else if(hour >=15 && hour <18){
+
+greeting="🌞 Good Afternoon!";
+
+}
+
+else{
+
+greeting="🌙 Good Night!";
+
+}
+
+
+
+document.getElementById("greeting").textContent = greeting;
+
+
+}
+
+
+
+updateNovaOS();
+
+setInterval(updateNovaOS,1000);
+
+
+
+
+
+
+// Boot Loading Animation
+
+
+let progress = 0;
+
+
+let messages = [
+
+"Starting Nova OS...",
+
+"Loading desktop...",
+
+"Checking system files...",
+
+"Preparing workspace...",
+
+"Welcome back!"
+
+];
+
+
+let messageIndex = 0;
+
+
+
+let boot = setInterval(function(){
+
+
+progress += 20;
+
+
+document.getElementById("progress").style.width =
+progress + "%";
+
+
+
+document.getElementById("loadingText").textContent =
+messages[messageIndex];
+
+
+
+messageIndex++;
+
+
+
+if(progress >=100){
+
+
+clearInterval(boot);
+
+
+
+setTimeout(function(){
+
+
+document.getElementById("welcome").style.opacity="0";
+
+
+
+setTimeout(function(){
+
+document.getElementById("welcome").style.display="none";
+
+},1000);
+
+
+
+},500);
+
+
+
+}
+
+
+
+},700);
+
+
+
+</script>
+
 
 </body>
+
 </html>
