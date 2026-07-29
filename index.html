@@ -1,50 +1,156 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova OS</title>
 </head>
 
-<body
-    style="font-family: 'Josefin Sans', sans-serif;
-           background-image: url('dg7egt3-c4e91a6d-c40c-43f2-b256-7466bcc9a126.gif');
-           background-size: cover;
-           background-repeat: no-repeat;
-           background-position: center;
-           background-color: #048a66dc;">
+<body style="
+    margin:0;
+    font-family:'Josefin Sans', sans-serif;
+    background-image:url('dg7egt3-c4e91a6d-c40c-43f2-b256-7466bcc9a126.gif');
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
+    height:100vh;
+    overflow:hidden;
+">
 
-    <div style="position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                text-align: center;">
+    <!-- Top Bar -->
+    <div style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        backdrop-filter:blur(10px);
+        background:rgba(0,0,0,.25);
+        color:white;
+        padding:8px 0;
+        z-index:1000;
+    ">
 
-        <div style="border:4mm ridge rgba(50,200,220,0.6);
-                    padding:20px;
-                    background:rgba(255,255,255,0.3);">
+        <p style="
+            margin-left:16px;
+            font-weight:bold;
+            background:rgba(255,255,255,.15);
+            padding:6px 14px;
+            border-radius:15px;
+        ">
+            Nova OS
+        </p>
+
+        <p style="
+            background:rgba(255,255,255,.25);
+            padding:6px 14px;
+            border-radius:15px;
+        ">
+            ☀️ Always Doomscrolling ☁️
+        </p>
+
+        <p id="clock" style="
+            margin-right:16px;
+            background:rgba(255,255,255,.15);
+            padding:6px 14px;
+            border-radius:15px;
+        ">
+        </p>
+
+    </div>
+
+    <!-- Main Window -->
+    <div style="
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        text-align:center;
+    ">
+
+        <div style="
+            border:4mm ridge rgba(50,200,220,.6);
+            padding:20px;
+            background:rgba(255,255,255,.30);
+            backdrop-filter:blur(10px);
+            border-radius:20px;
+        ">
 
             <img src="image.png" style="width:100px;height:100px;">
 
-            <h1 style="margin:4px;background-color:#01ac37;">
+            <h1 style="
+                margin-top:10px;
+                background:#01ac37;
+                color:white;
+                border-radius:10px;
+                padding:8px;
+            ">
                 Nova OS
             </h1>
 
-            <h1>Welcome to Nova</h1>
+            <h2>Welcome to Nova</h2>
 
-            <h2>Introduction</h2>
+            <h3>Introduction</h3>
 
-            <p>Good Afternoon</p>
+            <p id="greeting" style="
+                font-size:20px;
+                font-weight:bold;
+            ">
+            </p>
 
             <p>I love watching romance anime in my free time.</p>
 
-            <a href="https://www.tiktok.com/@gurbet76769899?is_from_webapp=1&sender_device=pc">
+            <br>
+
+            <a href="https://www.tiktok.com/@gurbet76769899?is_from_webapp=1&sender_device=pc" target="_blank">
                 TikTok
+            </a>
+
+            &nbsp;&nbsp;&nbsp;
+
+            <a href="https://www.youtube.com/@Umizoomi99" target="_blank">
+                YouTube
             </a>
 
         </div>
 
     </div>
 
-</body>
+    <script>
+        function updateNovaOS() {
+            const now = new Date();
 
+            // Live Clock
+            document.getElementById("clock").textContent =
+                now.toLocaleDateString() + " " +
+                now.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+                });
+
+            // Greeting
+            const hour = now.getHours();
+            let greeting = "";
+
+            if (hour >= 5 && hour < 12) {
+                greeting = "🌅 Good Morning!";
+            } else if (hour >= 12 && hour < 15) {
+                greeting = "☀️ Good Midday!";
+            } else if (hour >= 15 && hour < 18) {
+                greeting = "🌞 Good Afternoon!";
+            } else {
+                greeting = "🌙 Good Night!";
+            }
+
+            document.getElementById("greeting").textContent = greeting;
+        }
+
+        updateNovaOS();
+        setInterval(updateNovaOS, 1000);
+    </script>
+
+</body>
 </html>
