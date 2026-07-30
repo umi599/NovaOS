@@ -2,378 +2,432 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova OS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova OS</title>
 </head>
 
 <body style="
-    margin:0;
-    font-family:'Josefin Sans', sans-serif;
-    background-image:url('dg7egt3-c4e91a6d-c40c-43f2-b256-7466bcc9a126.gif');
-    background-size:cover;
-    background-repeat:no-repeat;
-    background-position:center;
-    height:100vh;
-    overflow:hidden;
+margin:0;
+font-family:'Josefin Sans',sans-serif;
+background-image:url('dg7egt3-c4e91a6d-c40c-43f2-b256-7466bcc9a126.gif');
+background-size:cover;
+background-repeat:no-repeat;
+background-position:center;
+height:100vh;
+overflow:hidden;
 ">
 
-
-<!-- Nova OS Boot Screen -->
+<!-- Boot Screen -->
 
 <div id="welcome" style="
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:#101010;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    color:white;
-    z-index:9999;
-    transition:opacity 1s;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#101010;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+color:white;
+z-index:9999;
+transition:opacity 1s;
 ">
 
-
-
-
-
-<h1 style="margin:10px;">
-    Nova OS
-</h1>
-
+<h1>Nova OS</h1>
 
 <p id="loadingText">
-    Starting Nova OS...
+Starting Nova OS...
 </p>
 
-
-
 <div style="
-    width:250px;
-    height:8px;
-    background:#333;
-    border-radius:10px;
-    overflow:hidden;
+width:250px;
+height:8px;
+background:#333;
+border-radius:10px;
+overflow:hidden;
 ">
-
 
 <div id="progress" style="
-    width:0%;
-    height:100%;
-    background:#01ac37;
-    transition:1s;
-">
-</div>
-
+width:0%;
+height:100%;
+background:#01ac37;
+transition:1s;
+"></div>
 
 </div>
 
-
 </div>
-
-
-
 
 <!-- Taskbar -->
 
 <div style="
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    backdrop-filter:blur(12px);
-    background:rgba(0,0,0,.25);
-    color:white;
-    padding:8px 0;
-    z-index:1000;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,.25);
+backdrop-filter:blur(12px);
+padding:8px 0;
+color:white;
+z-index:1000;
 ">
 
+<div style="
+display:flex;
+align-items:center;
+margin-left:16px;
+">
 
 <p style="
-    margin-left:16px;
-    font-weight:bold;
-    background:rgba(255,255,255,.15);
-    padding:6px 14px;
-    border-radius:15px;
+margin:0;
+font-weight:bold;
+background:rgba(255,255,255,.15);
+padding:6px 14px;
+border-radius:15px;
 ">
-    Nova OS
+Nova OS
 </p>
 
-
-
-<p style="
-    background:rgba(255,255,255,.25);
-    padding:6px 14px;
-    border-radius:15px;
+<button id="openBtn" style="
+display:none;
+margin-left:12px;
+padding:6px 12px;
+border:none;
+background:#01ac37;
+color:white;
+border-radius:8px;
+cursor:pointer;
 ">
-    ☀️ Always Doomscrolling ☁️
-</p>
-
-
-
-<p id="clock" style="
-    margin-right:16px;
-    background:rgba(255,255,255,.15);
-    padding:6px 14px;
-    border-radius:15px;
-">
-</p>
-
+About Me
+</button>
 
 </div>
 
+<p style="
+background:rgba(255,255,255,.25);
+padding:6px 14px;
+border-radius:15px;
+">
+☀️ Always Doomscrolling ☁️
+</p>
 
+<p id="clock" style="
+margin-right:16px;
+background:rgba(255,255,255,.15);
+padding:6px 14px;
+border-radius:15px;
+">
+</p>
 
+</div>
 
 <!-- Desktop Window -->
 
-<div style="
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
+<div id="mydiv" style="
+position:absolute;
+top:120px;
+left:300px;
 ">
 
-
-<div style="
-    border:4mm ridge rgba(50,200,220,.6);
-    padding:25px;
-    background:rgba(255,255,255,.30);
-    backdrop-filter:blur(12px);
-    border-radius:20px;
-    min-width:400px;
+<div id="mydivheader" style="
+background:#01ac37;
+color:white;
+padding:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:move;
+border-radius:20px 20px 0 0;
 ">
 
+<span style="font-weight:bold;">
+Welcome to Nova OS
+</span>
+
+<div>
+
+<button id="minimizeBtn" style="
+width:28px;
+height:28px;
+border:none;
+border-radius:50%;
+background:gold;
+cursor:pointer;
+margin-right:6px;
+font-weight:bold;
+">
+−
+</button>
+
+<button id="closeBtn" style="
+width:28px;
+height:28px;
+border:none;
+border-radius:50%;
+background:red;
+color:white;
+cursor:pointer;
+font-weight:bold;
+">
+×
+</button>
+
+</div>
+
+</div>
+
+<div style="
+border:4mm ridge rgba(50,200,220,.6);
+padding:25px;
+background:rgba(255,255,255,.30);
+backdrop-filter:blur(12px);
+border-radius:0 0 20px 20px;
+min-width:400px;
+text-align:center;
+">
 
 <img src="image.png" style="
-    width:120px;
-    height:120px;
+width:120px;
+height:120px;
 ">
-
-
 
 <h1 style="
-    background:#01ac37;
-    color:white;
-    border-radius:10px;
-    padding:10px;
+background:#01ac37;
+color:white;
+padding:10px;
+border-radius:10px;
 ">
-    Nova OS
+About Me
 </h1>
-
-
 
 <h2>
 Welcome to Nova
 </h2>
 
-
-
 <p id="greeting" style="
-    font-size:22px;
-    font-weight:bold;
+font-size:22px;
+font-weight:bold;
 ">
 </p>
 
-
-
 <p>
-I love watching romance anime in my free time.
+Heya It me Umi i wanted to say im 15 year old trying to make a great OS so please enjoy this there will be lots stuff done so just wait 
 </p>
 
-
-
 <br>
-
-
 
 <a href="https://www.tiktok.com/@gurbet76769899?is_from_webapp=1&sender_device=pc" target="_blank">
 TikTok
 </a>
 
-
 &nbsp;&nbsp;&nbsp;
-
 
 <a href="https://www.youtube.com/@Umizoomi99" target="_blank">
 YouTube
 </a>
 
-
-
 </div>
 
 </div>
-
-
-
 
 <script>
-
+    // ===============================
+// Clock + Greeting
+// ===============================
 
 function updateNovaOS() {
 
+    const now = new Date();
 
-const now = new Date();
+    document.getElementById("clock").textContent =
+        now.toLocaleDateString() + " " +
+        now.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
 
+    const hour = now.getHours();
+    let greeting = "";
 
+    if (hour >= 5 && hour < 12) {
+        greeting = "🌅 Good Morning!";
+    }
+    else if (hour >= 12 && hour < 15) {
+        greeting = "☀️ Good Midday!";
+    }
+    else if (hour >= 15 && hour < 18) {
+        greeting = "🌞 Good Afternoon!";
+    }
+    else {
+        greeting = "🌙 Good Night!";
+    }
 
-document.getElementById("clock").textContent =
-
-now.toLocaleDateString() + " " +
-
-now.toLocaleTimeString([], {
-
-hour:"2-digit",
-
-minute:"2-digit",
-
-second:"2-digit"
-
-});
-
-
-
-
-const hour = now.getHours();
-
-
-let greeting = "";
-
-
-
-if(hour >=5 && hour <12){
-
-greeting="🌅 Good Morning!";
+    document.getElementById("greeting").textContent = greeting;
 
 }
-
-else if(hour >=12 && hour <15){
-
-greeting="☀️ Good Midday!";
-
-}
-
-else if(hour >=15 && hour <18){
-
-greeting="🌞 Good Afternoon!";
-
-}
-
-else{
-
-greeting="🌙 Good Night!";
-
-}
-
-
-
-document.getElementById("greeting").textContent = greeting;
-
-
-}
-
-
 
 updateNovaOS();
-
-setInterval(updateNovaOS,1000);
-
+setInterval(updateNovaOS, 1000);
 
 
-
-
-
-// Boot Loading Animation
-
+// ===============================
+// Boot Screen
+// ===============================
 
 let progress = 0;
 
-
-let messages = [
-
-"Starting Nova OS...",
-
-"Loading desktop...",
-
-"Checking system files...",
-
-"Preparing workspace...",
-
-"Welcome back!"
-
+const messages = [
+    "Starting Nova OS...",
+    "Loading desktop...",
+    "Checking system files...",
+    "Preparing workspace...",
+    "Welcome back User-kun!",
+    "I-I mean User..."
 ];
-
 
 let messageIndex = 0;
 
+const boot = setInterval(function () {
+
+    progress += 16;
+
+    document.getElementById("progress").style.width = progress + "%";
+
+    document.getElementById("loadingText").textContent =
+        messages[Math.min(messageIndex, messages.length - 1)];
+
+    messageIndex++;
+
+    if (progress >= 100) {
+
+        clearInterval(boot);
+
+        setTimeout(function () {
+
+            document.getElementById("welcome").style.opacity = "0";
+
+            setTimeout(function () {
+
+                document.getElementById("welcome").style.display = "none";
+
+            }, 1000);
+
+        }, 500);
+
+    }
+
+}, 700);
 
 
-let boot = setInterval(function(){
+// ===============================
+// Draggable Window
+// ===============================
 
+dragElement(document.getElementById("mydiv"));
 
-progress += 20;
+function dragElement(element) {
 
+    let pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
 
-document.getElementById("progress").style.width =
-progress + "%";
+    const header = document.getElementById(element.id + "header");
 
+    if (header) {
+        header.onmousedown = dragMouseDown;
+    } else {
+        element.onmousedown = dragMouseDown;
+    }
 
+    function dragMouseDown(e) {
 
-document.getElementById("loadingText").textContent =
-messages[messageIndex];
+        e = e || window.event;
 
+        e.preventDefault();
 
+        pos3 = e.clientX;
+        pos4 = e.clientY;
 
-messageIndex++;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
 
+    }
 
+    function elementDrag(e) {
 
-if(progress >=100){
+        e = e || window.event;
 
+        e.preventDefault();
 
-clearInterval(boot);
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
 
+        pos3 = e.clientX;
+        pos4 = e.clientY;
 
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
 
-setTimeout(function(){
+    }
 
+    function closeDragElement() {
 
-document.getElementById("welcome").style.opacity="0";
+        document.onmouseup = null;
+        document.onmousemove = null;
 
-
-
-setTimeout(function(){
-
-document.getElementById("welcome").style.display="none";
-
-},1000);
-
-
-
-},500);
-
-
+    }
 
 }
 
 
+// ===============================
+// Window Controls
+// ===============================
 
-},700);
+const myWindow = document.getElementById("mydiv");
+const minimizeBtn = document.getElementById("minimizeBtn");
+const closeBtn = document.getElementById("closeBtn");
+const openBtn = document.getElementById("openBtn");
+
+minimizeBtn.onclick = function () {
+
+    myWindow.style.visibility = "hidden";
+    openBtn.style.display = "inline-block";
+
+};
+
+closeBtn.onclick = function () {
+
+    myWindow.style.display = "none";
+    openBtn.style.display = "inline-block";
+
+};
+
+openBtn.onclick = function () {
+
+    myWindow.style.display = "block";
+    myWindow.style.visibility = "visible";
+    openBtn.style.display = "none";
+
+};
 
 
+// ===============================
+// Console Messages
+// ===============================
+
+console.log("🚀 Nova OS started successfully.");
+console.log("System Status: Online");
 
 </script>
 
-
 </body>
-
 </html>
