@@ -1,18 +1,12 @@
-console.log("🚀 Nova OS started successfully.");
+minimizeBtn.onclick = function () {
 
-// ===============================
-// Window Controls
-// ===============================
+    myWindow.style.visibility = "hidden";
 
-const myWindow = document.getElementById("mydiv");
+    openBtn.style.display = "inline-block";
 
-const minimizeBtn = document.getElementById("minimizeBtn");
+};
 
-const closeBtn = document.getElementById("closeBtn");
-
-const openBtn = document.getElementById("openBtn");
-
-minimizeBtn.onclick = function(){
+closeBtn.onclick = function () {
 
     myWindow.style.display = "none";
 
@@ -20,18 +14,12 @@ minimizeBtn.onclick = function(){
 
 };
 
-closeBtn.onclick = function(){
+openBtn.onclick = function () {
 
-    myWindow.style.display = "none";
+    myWindow.style.display = "block";
 
-    openBtn.style.display = "inline-block";
+    myWindow.style.visibility = "visible";
 
-};
-
-openBtn.onclick = function(){
-
-    myWindow.style.display = "visible";
-
-    openBtn.style.display = "hidden";
+    openBtn.style.display = "none";
 
 };

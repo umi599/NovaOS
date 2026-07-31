@@ -2,9 +2,14 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Nova OS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body style="
@@ -12,13 +17,14 @@ margin:0;
 font-family:'Josefin Sans',sans-serif;
 background-image:url('dg7egt3-c4e91a6d-c40c-43f2-b256-7466bcc9a126.gif');
 background-size:cover;
-background-repeat:no-repeat;
 background-position:center;
+background-repeat:no-repeat;
 height:100vh;
 overflow:hidden;
 ">
 
-<!-- Boot Screen -->
+
+<!-- BOOT SCREEN -->
 
 <div id="welcome" style="
 position:fixed;
@@ -36,11 +42,14 @@ z-index:9999;
 transition:opacity 1s;
 ">
 
-<h1>Nova OS</h1>
+<h1>
+Nova OS
+</h1>
 
 <p id="loadingText">
 Starting Nova OS...
 </p>
+
 
 <div style="
 width:250px;
@@ -61,7 +70,8 @@ transition:1s;
 
 </div>
 
-<!-- Taskbar -->
+
+<!-- TASKBAR -->
 
 <div style="
 position:fixed;
@@ -77,6 +87,7 @@ padding:8px 0;
 color:white;
 z-index:1000;
 ">
+
 
 <div style="
 display:flex;
@@ -94,20 +105,14 @@ border-radius:15px;
 Nova OS
 </p>
 
-<button id="openBtn" style="
-display:none;
-margin-left:12px;
-padding:6px 12px;
-border:none;
-background:#01ac37;
-color:white;
-border-radius:8px;
-cursor:pointer;
-">
-About Me
+
+
 </button>
 
+
 </div>
+
+
 
 <p style="
 background:rgba(255,255,255,.25);
@@ -117,6 +122,8 @@ border-radius:15px;
 ☀️ Always Doomscrolling ☁️
 </p>
 
+
+
 <p id="clock" style="
 margin-right:16px;
 background:rgba(255,255,255,.15);
@@ -125,15 +132,80 @@ border-radius:15px;
 ">
 </p>
 
+
 </div>
 
-<!-- Desktop Window -->
+
+
+<!-- DESKTOP ICON -->
+
+<div onclick="openNova()" style="
+position:absolute;
+top:100px;
+left:40px;
+text-align:center;
+color:white;
+cursor:pointer;
+">
+
+
+<img src="Waguri.gif" style="
+width:70px;
+height:70px;
+border-radius:15px;
+">
+
+
+<p>
+About Me
+</p>
+
+
+</div>
+
+
+
+<!-- STATUS PANEL -->
+
+<div style="
+position:absolute;
+bottom:20px;
+left:20px;
+padding:15px;
+background:rgba(0,0,0,.35);
+color:white;
+border-radius:15px;
+backdrop-filter:blur(10px);
+">
+
+<h3>
+Nova System
+</h3>
+
+<p>
+CPU: Online
+</p>
+
+<p>
+Memory: Stable
+</p>
+
+<p>
+Network: Connected
+</p>
+
+</div>
+
+
+
+<!-- ABOUT WINDOW -->
 
 <div id="mydiv" style="
 position:absolute;
 top:120px;
 left:300px;
 ">
+
 
 <div id="mydivheader" style="
 background:#01ac37;
@@ -146,11 +218,14 @@ cursor:move;
 border-radius:20px 20px 0 0;
 ">
 
+
 <span style="font-weight:bold;">
 Welcome to Nova OS
 </span>
 
+
 <div>
+
 
 <button id="minimizeBtn" style="
 width:28px;
@@ -165,6 +240,7 @@ font-weight:bold;
 −
 </button>
 
+
 <button id="closeBtn" style="
 width:28px;
 height:28px;
@@ -178,9 +254,11 @@ font-weight:bold;
 ×
 </button>
 
+
 </div>
 
 </div>
+
 
 <div style="
 border:4mm ridge rgba(50,200,220,.6);
@@ -192,242 +270,366 @@ min-width:400px;
 text-align:center;
 ">
 
+
 <img src="image.png" style="
 width:120px;
 height:120px;
 ">
 
-<h1 style="
-background:#01ac37;
-color:white;
-padding:10px;
-border-radius:10px;
-">
-About Me
-</h1>
+
+
+
 
 <h2>
 Welcome to Nova
 </h2>
+
 
 <p id="greeting" style="
 font-size:22px;
 font-weight:bold;
 ">
 </p>
-
 <p>
-Heya It me Umi i wanted to say im 15 year old trying to make a great OS so please enjoy this there will be lots stuff done so just wait 
+Heya It me Umi. I wanted to say I'm a 15 year old trying to make a great OS, so please enjoy this. There will be lots of stuff added, so stay tuned.
 </p>
 
+
 <br>
+
 
 <a href="https://www.tiktok.com/@gurbet76769899?is_from_webapp=1&sender_device=pc" target="_blank">
 TikTok
 </a>
 
+
 &nbsp;&nbsp;&nbsp;
+
 
 <a href="https://www.youtube.com/@Umizoomi99" target="_blank">
 YouTube
 </a>
 
+
 </div>
 
 </div>
+
+
+
+<audio id="bootSound" src="startup.mp3"></audio>
+
+
 
 <script>
-    // ===============================
-// Clock + Greeting
+
+
+// ===============================
+// CLOCK + GREETING
 // ===============================
 
-function updateNovaOS() {
 
-    const now = new Date();
+function updateNovaOS(){
 
-    document.getElementById("clock").textContent =
-        now.toLocaleDateString() + " " +
-        now.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-        });
+const now = new Date();
 
-    const hour = now.getHours();
-    let greeting = "";
 
-    if (hour >= 5 && hour < 12) {
-        greeting = "🌅 Good Morning!";
-    }
-    else if (hour >= 12 && hour < 15) {
-        greeting = "☀️ Good Midday!";
-    }
-    else if (hour >= 15 && hour < 18) {
-        greeting = "🌞 Good Afternoon!";
-    }
-    else {
-        greeting = "🌙 Good Night!";
-    }
+document.getElementById("clock").textContent =
+now.toLocaleDateString() + " " +
+now.toLocaleTimeString([],{
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit"
+});
 
-    document.getElementById("greeting").textContent = greeting;
+
+const hour = now.getHours();
+
+let greeting;
+
+
+if(hour >= 5 && hour < 12){
+
+greeting="🌅 Good Morning!";
 
 }
 
+else if(hour >= 12 && hour < 15){
+
+greeting="☀️ Good Midday!";
+
+}
+
+else if(hour >= 15 && hour < 18){
+
+greeting="🌞 Good Afternoon!";
+
+}
+
+else{
+
+greeting="🌙 Good Night!";
+
+}
+
+
+document.getElementById("greeting").textContent=greeting;
+
+
+}
+
+
 updateNovaOS();
-setInterval(updateNovaOS, 1000);
+
+setInterval(updateNovaOS,1000);
+
 
 
 // ===============================
-// Boot Screen
+// BOOT SYSTEM
 // ===============================
 
-let progress = 0;
 
-const messages = [
-    "Starting Nova OS...",
-    "Loading desktop...",
-    "Checking system files...",
-    "Preparing workspace...",
-    "Welcome back User-kun!",
-    "I-I mean User..."
+let progress=0;
+
+
+const messages=[
+
+"Starting Nova OS...",
+"Loading desktop...",
+"Checking system files...",
+"Preparing workspace...",
+"Welcome back User-kun!",
+"I-I mean User..."
+
 ];
 
-let messageIndex = 0;
 
-const boot = setInterval(function () {
+let messageIndex=0;
 
-    progress += 16;
 
-    document.getElementById("progress").style.width = progress + "%";
+const boot=setInterval(function(){
 
-    document.getElementById("loadingText").textContent =
-        messages[Math.min(messageIndex, messages.length - 1)];
 
-    messageIndex++;
+progress+=16;
 
-    if (progress >= 100) {
 
-        clearInterval(boot);
+document.getElementById("progress").style.width=
+progress+"%";
 
-        setTimeout(function () {
 
-            document.getElementById("welcome").style.opacity = "0";
+document.getElementById("loadingText").textContent=
+messages[Math.min(messageIndex,messages.length-1)];
 
-            setTimeout(function () {
 
-                document.getElementById("welcome").style.display = "none";
+messageIndex++;
 
-            }, 1000);
 
-        }, 500);
+if(progress>=100){
 
-    }
 
-}, 700);
+clearInterval(boot);
+
+
+setTimeout(function(){
+
+
+document.getElementById("welcome").style.opacity="0";
+
+
+setTimeout(function(){
+
+
+document.getElementById("welcome").style.display="none";
+
+
+},1000);
+
+
+},500);
+
+
+}
+
+
+},700);
+
 
 
 // ===============================
-// Draggable Window
+// DRAG WINDOW
 // ===============================
+
 
 dragElement(document.getElementById("mydiv"));
 
-function dragElement(element) {
 
-    let pos1 = 0,
-        pos2 = 0,
-        pos3 = 0,
-        pos4 = 0;
 
-    const header = document.getElementById(element.id + "header");
+function dragElement(element){
 
-    if (header) {
-        header.onmousedown = dragMouseDown;
-    } else {
-        element.onmousedown = dragMouseDown;
-    }
 
-    function dragMouseDown(e) {
+let pos1=0,
+pos2=0,
+pos3=0,
+pos4=0;
 
-        e = e || window.event;
 
-        e.preventDefault();
+const header=document.getElementById(element.id+"header");
 
-        pos3 = e.clientX;
-        pos4 = e.clientY;
 
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
+header.onmousedown=dragMouseDown;
 
-    }
 
-    function elementDrag(e) {
 
-        e = e || window.event;
+function dragMouseDown(e){
 
-        e.preventDefault();
 
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
+e.preventDefault();
 
-        pos3 = e.clientX;
-        pos4 = e.clientY;
 
-        element.style.top = (element.offsetTop - pos2) + "px";
-        element.style.left = (element.offsetLeft - pos1) + "px";
+pos3=e.clientX;
+pos4=e.clientY;
 
-    }
 
-    function closeDragElement() {
+document.onmouseup=closeDragElement;
 
-        document.onmouseup = null;
-        document.onmousemove = null;
+document.onmousemove=elementDrag;
 
-    }
 
 }
 
 
+
+function elementDrag(e){
+
+
+e.preventDefault();
+
+
+pos1=pos3-e.clientX;
+
+pos2=pos4-e.clientY;
+
+
+pos3=e.clientX;
+
+pos4=e.clientY;
+
+
+let newTop=element.offsetTop-pos2;
+
+let newLeft=element.offsetLeft-pos1;
+
+
+
+newTop=Math.max(
+0,
+Math.min(
+window.innerHeight-element.offsetHeight,
+newTop
+)
+);
+
+
+newLeft=Math.max(
+0,
+Math.min(
+window.innerWidth-element.offsetWidth,
+newLeft
+)
+);
+
+
+
+element.style.top=newTop+"px";
+
+element.style.left=newLeft+"px";
+
+
+}
+
+
+
+function closeDragElement(){
+
+
+document.onmouseup=null;
+
+document.onmousemove=null;
+
+
+}
+
+
+}
+
+
+
 // ===============================
-// Window Controls
+// WINDOW CONTROLS
 // ===============================
 
-const myWindow = document.getElementById("mydiv");
-const minimizeBtn = document.getElementById("minimizeBtn");
-const closeBtn = document.getElementById("closeBtn");
-const openBtn = document.getElementById("openBtn");
 
-minimizeBtn.onclick = function () {
+const myWindow=document.getElementById("mydiv");
 
-    myWindow.style.visibility = "hidden";
-    openBtn.style.display = "inline-block";
+const minimizeBtn=document.getElementById("minimizeBtn");
+
+const closeBtn=document.getElementById("closeBtn");
+
+const openBtn=document.getElementById("openBtn");
+
+
+
+function openNova(){
+
+
+myWindow.style.display="block";
+
+myWindow.style.visibility="visible";
+
+openBtn.style.display="none";
+
+
+}
+
+
+
+minimizeBtn.onclick=function(){
+
+
+myWindow.style.visibility="hidden";
+
+openBtn.style.display="inline-block";
+
 
 };
 
-closeBtn.onclick = function () {
 
-    myWindow.style.display = "none";
-    openBtn.style.display = "inline-block";
 
-};
+closeBtn.onclick=function(){
 
-openBtn.onclick = function () {
 
-    myWindow.style.display = "block";
-    myWindow.style.visibility = "visible";
-    openBtn.style.display = "none";
+myWindow.style.display="none";
+
+openBtn.style.display="inline-block";
+
 
 };
 
 
-// ===============================
-// Console Messages
-// ===============================
+
+openBtn.onclick=openNova;
+
+
 
 console.log("🚀 Nova OS started successfully.");
+
 console.log("System Status: Online");
+
 
 </script>
 
+
 </body>
+
 </html>
