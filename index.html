@@ -6,12 +6,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title> Waguri OS</title>
+<title>Waguri OS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
-
 
 <body style="
 margin:0;
@@ -24,11 +23,11 @@ height:100vh;
 overflow:hidden;
 ">
 
+<!-- =========================
+FIRST TIME SETUP
+========================= -->
 
-
-<!-- BOOT SCREEN -->
-
-<div id="welcome" style="
+<div id="setupScreen" style="
 position:fixed;
 top:0;
 left:0;
@@ -39,12 +38,75 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-color:rgb(0, 0, 0);
+z-index:10000;
+">
+
+<img src="Waguri.gif" style="
+width:120px;
+height:120px;
+border-radius:20px;
+margin-bottom:20px;
+">
+
+<h1>Welcome to Waguri OS</h1>
+
+<p>Enter your nickname to continue</p>
+<p>PLEASE DO NOT USE YOUR REAL NAME</p>
+
+
+<input
+id="username"
+type="text"
+placeholder="Your Name"
+style="
+width:280px;
+padding:12px;
+font-size:18px;
+border:none;
+border-radius:12px;
+outline:none;
+text-align:center;
+">
+
+<br>
+
+<button id="continueBtn" style="
+padding:12px 30px;
+border:none;
+border-radius:12px;
+background:#e499ab;
+color:white;
+font-size:18px;
+cursor:pointer;
+">
+
+Continue
+
+</button>
+
+</div>
+
+<!-- =========================
+BOOT SCREEN
+========================= -->
+
+<div id="welcome" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#FFD1DC;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+color:black;
 z-index:9999;
 transition:opacity 1s;
 ">
 
-<h1>
+<h1 id="bootTitle">
 Waguri OS
 </h1>
 
@@ -52,19 +114,18 @@ Waguri OS
 Starting Waguri OS...
 </p>
 
-
 <div style="
-width:250px;
-height:8px;
-background:#fffefe;
-border-radius:10px;
+width:260px;
+height:10px;
+background:white;
+border-radius:20px;
 overflow:hidden;
 ">
 
 <div id="progress" style="
 width:0%;
 height:100%;
-background:#101010;
+background:#111;
 transition:1s;
 "></div>
 
@@ -72,10 +133,9 @@ transition:1s;
 
 </div>
 
-
-
-
-<!-- NOVA OS TASKBAR -->
+<!-- =========================
+TASKBAR
+========================= -->
 
 <div style="
 position:fixed;
@@ -84,34 +144,26 @@ left:0;
 width:100%;
 height:55px;
 display:flex;
-align-items:center;
 justify-content:space-between;
+align-items:center;
 background:#e499ab;
-backdrop-filter:blur(15px);
-color:white;
-z-index:1000;
 padding:0 20px;
 box-sizing:border-box;
+z-index:1000;
 ">
 
-
-
-<button onclick="openNova()" style="
+<button id="shutdownBtn" style="
 background:#FFD1DC;
 border:none;
-color:rgb(0, 0, 0);
-font-size:18px;
-font-weight:bold;
 padding:8px 18px;
 border-radius:15px;
 cursor:pointer;
+font-weight:bold;
 ">
 
 Shut Down
 
 </button>
-
-
 
 <div style="
 display:flex;
@@ -119,13 +171,12 @@ gap:12px;
 align-items:center;
 ">
 
-
 <button onclick="openNova()" style="
 width:40px;
 height:40px;
 border:none;
 border-radius:12px;
-background:rgba(255,255,255,.15);
+background:rgba(255,255,255,.25);
 cursor:pointer;
 ">
 
@@ -137,13 +188,12 @@ border-radius:8px;
 
 </button>
 
-
 <button style="
 width:40px;
 height:40px;
 border:none;
 border-radius:12px;
-background:rgba(255,255,255,.15);
+background:rgba(255,255,255,.25);
 cursor:pointer;
 ">
 
@@ -151,14 +201,12 @@ cursor:pointer;
 
 </button>
 
-
-
 <button style="
 width:40px;
 height:40px;
 border:none;
 border-radius:12px;
-background:rgba(255,255,255,.15);
+background:rgba(255,255,255,.25);
 cursor:pointer;
 ">
 
@@ -166,87 +214,73 @@ cursor:pointer;
 
 </button>
 
-
 </div>
-
-
 
 <p id="clock" style="
 margin:0;
 background:#FFD1DC;
-color:#000000;
-padding:8px 15px;
+color:black;
+padding:8px 14px;
 border-radius:15px;
 ">
 
 </p>
 
-
 </div>
 
+<!-- =========================
+REOPEN BUTTON
+========================= -->
 
-
-
-<!-- DESKTOP ICON -->
-
-<div onclick="openNova()" style="
-position:absolute;
-top:100px;
-left:40px;
-text-align:center;
-color:white;
+<button id="openBtn" style="
+display:none;
+position:fixed;
+bottom:70px;
+left:20px;
+padding:10px 18px;
+border:none;
+border-radius:12px;
+background:#FFD1DC;
 cursor:pointer;
+font-weight:bold;
+z-index:999;
 ">
 
+Open About Me
 
-<img src="Waguri.gif" style="
-width:70px;
-height:70px;
-border-radius:15px;
-">
+</button>
 
-
-<p>
-About Me
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- ABOUT WINDOW -->
+<!-- =========================
+ABOUT ME WINDOW
+========================= -->
 
 <div id="mydiv" style="
 position:absolute;
 top:120px;
 left:300px;
+display:block;
+z-index:500;
 ">
 
+<!-- WINDOW HEADER -->
 
 <div id="mydivheader" style="
 background:#FFD1DC;
-color:rgb(0, 0, 0);
+color:black;
 padding:10px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 cursor:move;
 border-radius:20px 20px 0 0;
+user-select:none;
 ">
-
 
 <span style="font-weight:bold;">
 Welcome to Waguri OS
 </span>
 
-
 <div>
-
 
 <button id="minimizeBtn" style="
 width:28px;
@@ -258,9 +292,10 @@ cursor:pointer;
 margin-right:6px;
 font-weight:bold;
 ">
-−
-</button>
 
+−
+
+</button>
 
 <button id="closeBtn" style="
 width:28px;
@@ -272,383 +307,408 @@ color:white;
 cursor:pointer;
 font-weight:bold;
 ">
+
 ×
+
 </button>
 
-
 </div>
 
 </div>
 
+<!-- WINDOW BODY -->
 
 <div style="
 border:4mm ridge rgba(50,200,220,.6);
-padding:25px;
-background:rgba(255,255,255,.30);
+background:rgba(255,255,255,.35);
 backdrop-filter:blur(12px);
+padding:25px;
 border-radius:0 0 20px 20px;
-min-width:400px;
+min-width:430px;
 text-align:center;
 ">
-
 
 <img src="image copy.png" style="
 width:120px;
 height:120px;
+border-radius:15px;
 ">
 
+<h2>About Me</h2>
 
-
-
-
-<h2>
-About Me 
-</h2>
-
+<p id="welcomeUser" style="
+font-size:20px;
+font-weight:bold;
+">
+Welcome!
+</p>
 
 <p id="greeting" style="
 font-size:22px;
 font-weight:bold;
 ">
 </p>
+
 <p>
-Heya It me Umi. I wanted to say I'm a 15 year old trying to make a great OS, so please enjoy this. There will be lots of stuff added, so stay tuned.
+Hey! I'm Umi. I'm 15 years old and I'm building Waguri OS from scratch. Thanks for checking it out! I plan on adding a lot more apps and features over time.
 </p>
 
-
 <br>
-
-
-
-
-
-&nbsp;&nbsp;&nbsp;
-
 
 <a href="https://www.youtube.com/@Umizoomi99" target="_blank">
 YouTube
 </a>
 
-
 </div>
 
 </div>
 
-
-
-<audio id="bootSound" src="47313572-startup-sound-variation-6-316850.mp3">
-
-</audio>
+<audio id="bootSound" src="47313572-startup-sound-variation-6-316850.mp3"></audio>
 
 <script>
+// ======================================
+// USER SETUP
+// ======================================
 
+let userName = localStorage.getItem("waguriUser");
 
-// ===============================
-// CLOCK + GREETING
-// ===============================
+const setupScreen = document.getElementById("setupScreen");
+const continueBtn = document.getElementById("continueBtn");
+const usernameInput = document.getElementById("username");
 
+const bootScreen = document.getElementById("welcome");
 
-function updateNovaOS(){
+continueBtn.onclick = function () {
 
-const now = new Date();
+    const enteredName = usernameInput.value.trim();
 
+    if (enteredName === "") {
 
-document.getElementById("clock").textContent =
-now.toLocaleDateString() + " " +
-now.toLocaleTimeString([],{
-hour:"2-digit",
-minute:"2-digit",
-second:"2-digit"
-});
+        alert("Please enter your name.");
 
+        return;
 
-const hour = now.getHours();
+    }
 
-let greeting;
+    userName = enteredName;
 
+    localStorage.setItem("waguriUser", userName);
 
-if(hour >= 5 && hour < 12){
+    setupScreen.style.display = "none";
 
-greeting="🌅 Good Morning!";
+    bootScreen.style.display = "flex";
 
-}
+    startBoot();
 
-else if(hour >= 12 && hour < 15){
+};
 
-greeting="☀️ Good Midday!";
+if (userName) {
 
-}
+    setupScreen.style.display = "none";
 
-else if(hour >= 15 && hour < 18){
+    bootScreen.style.display = "flex";
 
-greeting="🌞 Good Afternoon!";
-
-}
-
-else{
-
-greeting="🌙 Good Night!";
+    startBoot();
 
 }
 
 
-document.getElementById("greeting").textContent=greeting;
+// ======================================
+// CLOCK
+// ======================================
 
+function updateClock() {
+
+    const now = new Date();
+
+    document.getElementById("clock").textContent =
+        now.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
 
 }
 
+updateClock();
 
-updateNovaOS();
-
-setInterval(updateNovaOS,1000);
-
+setInterval(updateClock,1000);
 
 
-// ===============================
-// BOOT SYSTEM
-// ===============================
+// ======================================
+// GREETING
+// ======================================
+
+function updateGreeting(){
+
+    const hour = new Date().getHours();
+
+    let greeting="";
+
+    if(hour>=5 && hour<12){
+
+        greeting="🌅 Good Morning";
+
+    }
+
+    else if(hour>=12 && hour<15){
+
+        greeting="☀️ Good Midday";
+
+    }
+
+    else if(hour>=15 && hour<18){
+
+        greeting="🌞 Good Afternoon";
+
+    }
+
+    else{
+
+        greeting="🌙 Good Night";
+
+    }
+
+    document.getElementById("greeting").textContent =
+        greeting + ", " + userName + "!";
+
+    document.getElementById("welcomeUser").textContent =
+        "Welcome back, " + userName + "!";
+
+}
+
+updateGreeting();
 
 
-let progress=0;
+// ======================================
+// BOOT
+// ======================================
 
+function startBoot(){
+
+document.getElementById("bootTitle").textContent =
+"Waguri OS";
 
 const messages=[
 
 "Starting Waguri OS...",
-"Loading Waguri Desktop...",
-"Checking Waguri system files...",
-"Preparing Waguri workspace...",
-"Welcome back Kaoruko Waguri! :) ",
 
+"Loading Desktop...",
 
+"Loading Files...",
+
+"Checking System...",
+
+"Preparing Workspace...",
+
+"Almost Ready...",
+
+"Welcome back " + userName + "!"
 
 ];
 
+let progress=0;
 
-let messageIndex=0;
+let index=0;
 
+document.getElementById("bootSound").play().catch(()=>{});
 
 const boot=setInterval(function(){
 
-
-progress+=20;
-
+progress+=15;
 
 document.getElementById("progress").style.width=
 progress+"%";
 
-
 document.getElementById("loadingText").textContent=
-messages[Math.min(messageIndex,messages.length-1)];
+messages[Math.min(index,messages.length-1)];
 
-
-messageIndex++;
-
+index++;
 
 if(progress>=100){
 
-
 clearInterval(boot);
 
+setTimeout(function(){
+
+bootScreen.style.opacity="0";
 
 setTimeout(function(){
 
+bootScreen.style.display="none";
 
-document.getElementById("welcome").style.opacity="0";
-
-
-setTimeout(function(){
-
-
-document.getElementById("welcome").style.display="none";
-
+bootScreen.style.opacity="1";
 
 },1000);
 
-
-},500);
-
+},700);
 
 }
 
+},650);
 
-},700);
-
-
-
-// ===============================
+}
+// ======================================
 // DRAG WINDOW
-// ===============================
+// ======================================
 
+const myWindow = document.getElementById("mydiv");
 
-dragElement(document.getElementById("mydiv"));
-
-
+dragElement(myWindow);
 
 function dragElement(element){
 
+let pos1=0,pos2=0,pos3=0,pos4=0;
 
-let pos1=0,
-pos2=0,
-pos3=0,
-pos4=0;
-
-
-const header=document.getElementById(element.id+"header");
-
+const header=document.getElementById("mydivheader");
 
 header.onmousedown=dragMouseDown;
 
-
-
 function dragMouseDown(e){
 
-
+e=e||window.event;
 e.preventDefault();
-
 
 pos3=e.clientX;
 pos4=e.clientY;
 
-
-document.onmouseup=closeDragElement;
-
+document.onmouseup=stopDragging;
 document.onmousemove=elementDrag;
 
-
 }
-
-
 
 function elementDrag(e){
 
-
+e=e||window.event;
 e.preventDefault();
 
-
 pos1=pos3-e.clientX;
-
 pos2=pos4-e.clientY;
 
-
 pos3=e.clientX;
-
 pos4=e.clientY;
 
-
-let newTop=element.offsetTop-pos2;
-
-let newLeft=element.offsetLeft-pos1;
-
-
-
-newTop=Math.max(
-0,
-Math.min(
-window.innerHeight-element.offsetHeight,
-newTop
-)
-);
-
-
-newLeft=Math.max(
-0,
-Math.min(
-window.innerWidth-element.offsetWidth,
-newLeft
-)
-);
-
-
-
-element.style.top=newTop+"px";
-
-element.style.left=newLeft+"px";
-
+element.style.top=(element.offsetTop-pos2)+"px";
+element.style.left=(element.offsetLeft-pos1)+"px";
 
 }
 
-
-
-function closeDragElement(){
-
+function stopDragging(){
 
 document.onmouseup=null;
-
 document.onmousemove=null;
 
+}
 
 }
 
 
-}
-
-
-
-// ===============================
+// ======================================
 // WINDOW CONTROLS
-// ===============================
-
-
-const myWindow=document.getElementById("mydiv");
+// ======================================
 
 const minimizeBtn=document.getElementById("minimizeBtn");
-
 const closeBtn=document.getElementById("closeBtn");
-
 const openBtn=document.getElementById("openBtn");
-
-
 
 function openNova(){
 
+    myWindow.style.display="block";
+    myWindow.style.visibility="visible";
 
-myWindow.style.display="block";
+    openBtn.style.display="none";
 
-myWindow.style.visibility="visible";
-
-openBtn.style.display="none";
-
+    myWindow.style.zIndex=999;
 
 }
 
-
-
 minimizeBtn.onclick=function(){
 
+    myWindow.style.visibility="hidden";
 
-myWindow.style.visibility="hidden";
-
-openBtn.style.display="inline-block";
-
+    openBtn.style.display="inline-block";
 
 };
-
-
 
 closeBtn.onclick=function(){
 
+    myWindow.style.display="none";
 
-myWindow.style.display="none";
-
-openBtn.style.display="inline-block";
-
+    openBtn.style.display="inline-block";
 
 };
-
-
 
 openBtn.onclick=openNova;
 
 
+// ======================================
+// SHUT DOWN
+// ======================================
 
-console.log("🚀 Waguri OS started successfully.");
+const shutdownBtn=document.getElementById("shutdownBtn");
 
-console.log("System Status: Online");
+shutdownBtn.onclick=function(){
+
+const shutdown=document.createElement("div");
+
+shutdown.id="shutdownScreen";
+
+shutdown.style.position="fixed";
+shutdown.style.top="0";
+shutdown.style.left="0";
+shutdown.style.width="100%";
+shutdown.style.height="100%";
+shutdown.style.background="#111";
+shutdown.style.color="white";
+shutdown.style.display="flex";
+shutdown.style.justifyContent="center";
+shutdown.style.alignItems="center";
+shutdown.style.flexDirection="column";
+shutdown.style.zIndex="999999";
+
+shutdown.innerHTML=`
+
+<h1>Waguri OS</h1>
+
+<p>Shutting down...</p>
+
+`;
+
+document.body.appendChild(shutdown);
+
+setTimeout(function(){
+
+shutdown.innerHTML=`
+
+<h1>Goodbye ${userName}!</h1>
+
+<p>It is now safe to close this tab.</p>
+
+`;
+
+},2500);
+
+};
 
 
+// ======================================
+// DESKTOP ICON
+// ======================================
+
+document.getElementById("desktopAbout").onclick=openNova;
+
+
+// ======================================
+// CONSOLE
+// ======================================
+
+console.clear();
+
+console.log("🌸 Waguri OS Loaded");
+console.log("User:",userName);
+console.log("Desktop Ready");
+console.log("Status: Online");
 </script>
-
 
 </body>
 

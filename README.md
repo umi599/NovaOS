@@ -10,4 +10,4 @@
 
 # Day 3: I made the boot screen a bit nicer adding a bit of funny but hey it always to add joke here and there so yeah see ya on day four.
 
-Day 4: This is a huge delay no dobut but doesn't matter because it all be worth in end instead of Nova OS this will be Waguri OS.
+# Day 4: This is a huge delay no dobut but doesn't matter because it all be worth in end instead of Nova OS this will be Waguri OS.
