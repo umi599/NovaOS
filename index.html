@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nova OS</title>
+<title>Waguri OS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
 
@@ -45,11 +45,11 @@ transition:opacity 1s;
 ">
 
 <h1>
-Nova OS
+Waguri OS
 </h1>
 
 <p id="loadingText">
-Starting Nova OS...
+Starting Waguri OS...
 </p>
 
 
@@ -64,7 +64,7 @@ overflow:hidden;
 <div id="progress" style="
 width:0%;
 height:100%;
-background:#01ac37;
+background:#FFD1DC;
 transition:1s;
 "></div>
 
@@ -97,7 +97,7 @@ box-sizing:border-box;
 
 
 <button onclick="openNova()" style="
-background:#01ac37;
+background:#FFD1DC;
 border:none;
 color:white;
 font-size:18px;
@@ -228,8 +228,8 @@ left:300px;
 
 
 <div id="mydivheader" style="
-background:#01ac37;
-color:white;
+background:#FFD1DC;
+color:rgb(0, 0, 0);
 padding:10px;
 display:flex;
 justify-content:space-between;
@@ -240,7 +240,7 @@ border-radius:20px 20px 0 0;
 
 
 <span style="font-weight:bold;">
-Welcome to Nova OS
+Welcome to Waguri OS
 </span>
 
 
@@ -252,7 +252,7 @@ width:28px;
 height:28px;
 border:none;
 border-radius:50%;
-background:gold;
+background:#e0b9c2;
 cursor:pointer;
 margin-right:6px;
 font-weight:bold;
@@ -266,7 +266,7 @@ width:28px;
 height:28px;
 border:none;
 border-radius:50%;
-background:red;
+background:#5f4e52;
 color:white;
 cursor:pointer;
 font-weight:bold;
@@ -413,12 +413,12 @@ let progress=0;
 
 const messages=[
 
-"Starting Nova OS...",
-"Loading desktop...",
-"Checking system files...",
-"Preparing workspace...",
-"Welcome back User-kun!",
-"I-I mean User..."
+"Starting Waguri OS...",
+"Loading Waguri Desktop...",
+"Checking Waguri system files...",
+"Preparing Waguri workspace...",
+"Welcome back Kaoruko Waguri! :) ",
+
 
 
 ];
@@ -430,7 +430,7 @@ let messageIndex=0;
 const boot=setInterval(function(){
 
 
-progress+=16;
+progress+=20;
 
 
 document.getElementById("progress").style.width=
@@ -641,7 +641,7 @@ openBtn.onclick=openNova;
 
 
 
-console.log("🚀 Nova OS started successfully.");
+console.log("🚀 Waguri OS started successfully.");
 
 console.log("System Status: Online");
 
