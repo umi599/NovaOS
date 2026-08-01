@@ -2,7 +2,7 @@
 
 # Welcome to Nova OS 
 
-# if you are seeing this is the: Day 3
+# if you are seeing this is the: Day 4
 
 # Day 1: I just started the first Part of Nova it has the basics but it will get better.
 
