@@ -1,4 +1,5 @@
-Waguri OS is based on the girlfriend from The Fragant Flower Blooms With Diginity.
+# Waguri OS is based on the girlfriend from The Fragant Flower Blooms With Diginity.
+    
     This has:
         -> Startup sound
         -> Shutdown sound
@@ -12,5 +13,11 @@ Waguri OS is based on the girlfriend from The Fragant Flower Blooms With Diginit
         -> Working boot screen
         -> Working shut down screen
         -> workng username to welcome you
+        -> Working date
+        -> Photo Viewer
+        -> Settings
+        -> amination
+
+    
 
 Thus this webOS is for everyone please enjoy.

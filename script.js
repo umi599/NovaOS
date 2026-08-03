@@ -1,290 +1,641 @@
-// ===============================
-// USERNAME SYSTEM
-// ===============================
+// ==========================================
+// WAGURI OS v2
+// PART 1 - CORE SYSTEM
+// ==========================================
+
+// ------------------------------
+// ELEMENTS
+// ------------------------------
 
 const usernameScreen = document.getElementById("usernameScreen");
 const usernameInput = document.getElementById("usernameInput");
 const continueBtn = document.getElementById("continueBtn");
 
 const welcome = document.getElementById("welcome");
+const progress = document.getElementById("progress");
 const loadingText = document.getElementById("loadingText");
-const progressBar = document.getElementById("progress");
+
+const desktop = document.getElementById("desktop");
+
+const clock = document.getElementById("clock");
+const greeting = document.getElementById("greeting");
+const aboutUsername = document.getElementById("aboutUsername");
+const welcomeUser = document.getElementById("welcomeUser");
 
 const bootSound = document.getElementById("bootSound");
 const shutdownSound = document.getElementById("shutdownSound");
+const shutdownScreen = document.getElementById("shutdownScreen");
 
-let userName = localStorage.getItem("waguriUser");
+// ------------------------------
+// BOOT MESSAGES
+// ------------------------------
 
-if(userName){
+const bootMessages = [
 
-    usernameScreen.style.display = "none";
+    "Starting Waguri OS...",
+    "Loading desktop...",
+    "Checking system files...",
+    "Preparing workspace...",
+    "Loading user profile...",
+    "Almost Ready..."
 
-    startBoot();
+];
 
-}
+// ------------------------------
+// USERNAME SETUP
+// ------------------------------
 
-continueBtn.onclick = function(){
+window.addEventListener("load", function () {
 
-    if(usernameInput.value.trim() === ""){
+    const savedUser = localStorage.getItem("waguriUsername");
 
-        alert("Please enter your name.");
+    if (savedUser) {
 
-        return;
-
-    }
-
-    userName = usernameInput.value;
-
-    localStorage.setItem("waguriUser", userName);
-
-    usernameScreen.style.display = "none";
-
-    startBoot();
-
-};
-
-usernameInput.addEventListener("keypress", function(e){
-
-    if(e.key === "Enter"){
-
-        continueBtn.click();
+        usernameInput.value = savedUser;
 
     }
 
 });
 
+continueBtn.addEventListener("click", function () {
 
-// ===============================
-// BOOT SYSTEM
-// ===============================
+    const username = usernameInput.value.trim();
 
-function startBoot(){
+    if (username === "") {
+
+        alert("Please enter a username.");
+
+        return;
+
+    }
+
+    localStorage.setItem("waguriUsername", username);
+
+    usernameScreen.style.display = "none";
+
+    startBoot(username);
+
+});
+
+// ------------------------------
+// BOOT SEQUENCE
+// ------------------------------
+
+function startBoot(username) {
 
     welcome.style.display = "flex";
 
-    if(bootSound){
+    if (bootSound) {
 
         bootSound.currentTime = 0;
-        bootSound.play().catch(()=>{});
+        bootSound.play().catch(() => {});
 
     }
 
-    let progress = 0;
+    let percent = 0;
+    let message = 0;
 
-    let messageIndex = 0;
+    const boot = setInterval(function () {
 
-    const messages = [
+        percent += 2;
 
-        "Starting Waguri OS...",
+        progress.style.width = percent + "%";
 
-        "Loading Desktop...",
+        if (message < bootMessages.length) {
 
-        "Checking system files...",
-
-        "Preparing workspace...",
-
-        "Welcome back, " + userName + "!",
-
-        "Launching Desktop..."
-
-    ];
-
-    const boot = setInterval(function(){
-
-        progress += 20;
-
-        progressBar.style.width = progress + "%";
-
-        loadingText.textContent =
-        messages[Math.min(messageIndex, messages.length - 1)];
-
-        messageIndex++;
-
-        if(progress >= 100){
-
-            clearInterval(boot);
-
-            setTimeout(function(){
-
-                welcome.style.opacity = "0";
-
-                setTimeout(function(){
-
-                    welcome.style.display = "none";
-
-                },1000);
-
-            },700);
+            loadingText.textContent = bootMessages[message];
+            message++;
 
         }
 
-    },700);
+        if (percent >= 100) {
+
+            clearInterval(boot);
+
+            setTimeout(function () {
+
+                welcome.style.display = "none";
+                desktop.style.display = "block";
+
+                if (aboutUsername) {
+
+                    aboutUsername.textContent = username;
+
+                }
+
+                if (welcomeUser) {
+
+                    welcomeUser.textContent =
+                        "Welcome, " + username + "!";
+
+                }
+
+                notify(
+                    "Welcome",
+                    "Hello " + username + "! Waguri OS is ready."
+                );
+
+            }, 600);
+
+        }
+
+    }, 70);
 
 }
-// ===============================
-// SHUTDOWN
-// ===============================
 
-const shutdownBtn =
-document.getElementById("shutdownBtn");
+// ------------------------------
+// CLOCK
+// ------------------------------
 
-const shutdownScreen =
-document.getElementById("shutdownScreen");
+function updateClock() {
 
-shutdownBtn.onclick = function(){
+    const now = new Date();
 
-    if(shutdownSound){
+    if (clock) {
 
-        shutdownSound.currentTime = 0;
+        clock.textContent =
+            now.toLocaleDateString() +
+            " " +
+            now.toLocaleTimeString([], {
 
-        shutdownSound.play().catch(()=>{});
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+
+            });
 
     }
 
+}
+
+updateClock();
+
+setInterval(updateClock, 1000);
+
+// ------------------------------
+// GREETING
+// ------------------------------
+
+function updateGreeting() {
+
+    if (!greeting) return;
+
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour < 12) {
+
+        greeting.textContent = "🌅 Good Morning!";
+
+    }
+
+    else if (hour < 15) {
+
+        greeting.textContent = "☀️ Good Midday!";
+
+    }
+
+    else if (hour < 18) {
+
+        greeting.textContent = "🌞 Good Afternoon!";
+
+    }
+
+    else {
+
+        greeting.textContent = "🌙 Good Evening!";
+
+    }
+
+}
+
+updateGreeting();
+
+// ------------------------------
+// NOTIFICATIONS
+// ------------------------------
+
+function notify(title, text) {
+
+    const box = document.getElementById("notification");
+
+    if (!box) return;
+
+    document.getElementById("notificationTitle").textContent = title;
+    document.getElementById("notificationText").textContent = text;
+
+    box.style.display = "block";
+
+    setTimeout(function () {
+
+        box.style.display = "none";
+
+    }, 3500);
+
+}
+
+// ------------------------------
+// SHUTDOWN
+// ------------------------------
+
+function shutdownOS() {
+
+    desktop.style.display = "none";
+
     shutdownScreen.style.display = "flex";
 
-    document.getElementById("taskbar").style.display = "none";
+    if (shutdownSound) {
 
-    myWindow.style.display = "none";
+        shutdownSound.currentTime = 0;
+        shutdownSound.play().catch(() => {});
 
-    if(settingsWindow)
-        settingsWindow.style.display = "none";
+    }
 
-    if(filesWindow)
-        filesWindow.style.display = "none";
+    setTimeout(function () {
 
-    if(photosWindow)
-        photosWindow.style.display = "none";
+        window.close();
 
-};
-// ===============================
-// WINDOW REFERENCES
-// ===============================
+        location.href = "about:blank";
 
-// About Me
+    }, 3000);
+
+}
+// ==========================================
+// PART 2 - WINDOW MANAGER
+// ==========================================
+
+// ------------------------------
+// ABOUT WINDOW
+// ------------------------------
+
 const myWindow = document.getElementById("mydiv");
 const minimizeBtn = document.getElementById("minimizeBtn");
 const closeBtn = document.getElementById("closeBtn");
-const aboutIcon = document.getElementById("aboutIcon");
-const desktopAbout = document.getElementById("desktopAbout");
 
-// Settings
+// ------------------------------
+// SETTINGS
+// ------------------------------
+
 const settingsWindow = document.getElementById("settingsWindow");
 const settingsIcon = document.getElementById("settingsIcon");
-const desktopSettings = document.getElementById("desktopSettings");
 const settingsClose = document.getElementById("settingsClose");
 
-// Files
+// ------------------------------
+// FILE EXPLORER
+// ------------------------------
+
 const filesWindow = document.getElementById("filesWindow");
 const filesIcon = document.getElementById("filesIcon");
-const desktopFiles = document.getElementById("desktopFiles");
 const filesClose = document.getElementById("filesClose");
 
-// Photos
+// ------------------------------
+// PHOTO VIEWER
+// ------------------------------
+
 const photosWindow = document.getElementById("photosWindow");
 const photosClose = document.getElementById("photosClose");
 
+// ------------------------------
+// START MENU BUTTONS
+// ------------------------------
 
-// ===============================
+const aboutIcon = document.getElementById("aboutIcon");
+const desktopAbout = document.getElementById("desktopAbout");
+
+const desktopFiles = document.getElementById("desktopFiles");
+const desktopSettings = document.getElementById("desktopSettings");
+
+const startAbout = document.getElementById("startAbout");
+const startFiles = document.getElementById("startFiles");
+const startSettings = document.getElementById("startSettings");
+
+// ==========================================
+// WINDOW FUNCTIONS
+// ==========================================
+
+function openWindow(win){
+
+    if(!win) return;
+
+    win.style.display="block";
+    win.style.visibility="visible";
+
+}
+
+function closeWindow(win){
+
+    if(!win) return;
+
+    win.style.display="none";
+
+}
+
+function minimizeWindow(win){
+
+    if(!win) return;
+
+    win.classList.add("minimizeAnimation");
+
+    setTimeout(function(){
+
+        win.style.visibility="hidden";
+        win.classList.remove("minimizeAnimation");
+
+    },300);
+
+}
+
+function restoreWindow(win){
+
+    if(!win) return;
+
+    win.style.display="block";
+    win.style.visibility="visible";
+
+}
+
+// ==========================================
 // ABOUT ME
-// ===============================
+// ==========================================
 
-function openNova(){
+if(aboutIcon){
 
-    myWindow.style.display = "block";
-    myWindow.style.visibility = "visible";
+    aboutIcon.onclick=function(){
+
+        restoreWindow(myWindow);
+
+    };
 
 }
 
-aboutIcon.onclick = openNova;
-desktopAbout.onclick = openNova;
+if(desktopAbout){
 
-minimizeBtn.onclick = function(){
+    desktopAbout.onclick=function(){
 
-    myWindow.style.visibility = "hidden";
+        restoreWindow(myWindow);
 
-};
+    };
 
-closeBtn.onclick = function(){
+}
 
-    myWindow.style.display = "none";
+if(startAbout){
 
-};
+    startAbout.onclick=function(){
 
+        restoreWindow(myWindow);
 
-// ===============================
+    };
+
+}
+
+if(minimizeBtn){
+
+    minimizeBtn.onclick=function(){
+
+        minimizeWindow(myWindow);
+
+    };
+
+}
+
+if(closeBtn){
+
+    closeBtn.onclick=function(){
+
+        closeWindow(myWindow);
+
+    };
+
+}
+
+// ==========================================
 // SETTINGS
-// ===============================
+// ==========================================
 
-function openSettings(){
+if(settingsIcon){
 
-    settingsWindow.style.display = "block";
+    settingsIcon.onclick=function(){
+
+        restoreWindow(settingsWindow);
+
+    };
 
 }
 
-settingsIcon.onclick = openSettings;
-desktopSettings.onclick = openSettings;
+if(desktopSettings){
 
-settingsClose.onclick = function(){
+    desktopSettings.onclick=function(){
 
-    settingsWindow.style.display = "none";
+        restoreWindow(settingsWindow);
 
-};
+    };
 
+}
 
-// ===============================
+if(startSettings){
+
+    startSettings.onclick=function(){
+
+        restoreWindow(settingsWindow);
+
+    };
+
+}
+
+if(settingsClose){
+
+    settingsClose.onclick=function(){
+
+        closeWindow(settingsWindow);
+
+    };
+
+}
+
+// ==========================================
 // FILE EXPLORER
-// ===============================
+// ==========================================
 
-function openFiles(){
+if(filesIcon){
 
-    filesWindow.style.display = "block";
+    filesIcon.onclick=function(){
+
+        restoreWindow(filesWindow);
+
+    };
+
+}
+
+if(desktopFiles){
+
+    desktopFiles.onclick=function(){
+
+        restoreWindow(filesWindow);
+
+    };
 
 }
 
-filesIcon.onclick = openFiles;
-desktopFiles.onclick = openFiles;
+if(startFiles){
 
-filesClose.onclick = function(){
+    startFiles.onclick=function(){
 
-    filesWindow.style.display = "none";
+        restoreWindow(filesWindow);
 
-};
-
-
-// ===============================
-// PHOTOS
-// ===============================
-
-photosClose.onclick = function(){
-
-    photosWindow.style.display = "none";
-
-};
-dragElement(document.getElementById("mydiv"));
-dragElement(document.getElementById("settingsWindow"));
-dragElement(document.getElementById("filesWindow"));
-dragElement(document.getElementById("photosWindow"));
-const header =
-document.getElementById(
-element.id.replace("Window","") + "Header"
-);
-if(header){
-
-    header.onmousedown = dragMouseDown;
+    };
 
 }
-// ===============================
-// WALLPAPER SYSTEM
-// ===============================
 
-const wallpaperButtons = document.querySelectorAll(".wallpaperBtn");
+if(filesClose){
 
-const wallpaperUpload =
-document.getElementById("wallpaperUpload");
+    filesClose.onclick=function(){
 
+        closeWindow(filesWindow);
 
-// Restore saved wallpaper
+    };
+
+}
+
+// ==========================================
+// PHOTO VIEWER
+// ==========================================
+
+if(photosClose){
+
+    photosClose.onclick=function(){
+
+        closeWindow(photosWindow);
+
+    };
+
+}
+
+// ==========================================
+// DRAG WINDOWS
+// ==========================================
+
+makeDraggable("mydiv","mydivheader");
+makeDraggable("settingsWindow",".windowHeader");
+makeDraggable("filesWindow",".windowHeader");
+makeDraggable("photosWindow",".windowHeader");
+
+function makeDraggable(windowId,headerSelector){
+
+    const windowElement=document.getElementById(windowId);
+
+    if(!windowElement) return;
+
+    let header;
+
+    if(headerSelector.startsWith(".")){
+
+        header=windowElement.querySelector(headerSelector);
+
+    }else{
+
+        header=document.getElementById(headerSelector);
+
+    }
+
+    if(!header) return;
+
+    let x=0,y=0,mx=0,my=0;
+
+    header.onmousedown=dragMouseDown;
+
+    function dragMouseDown(e){
+
+        e.preventDefault();
+
+        mx=e.clientX;
+        my=e.clientY;
+
+        document.onmouseup=stopDrag;
+        document.onmousemove=drag;
+
+    }
+
+    function drag(e){
+
+        e.preventDefault();
+
+        x=mx-e.clientX;
+        y=my-e.clientY;
+
+        mx=e.clientX;
+        my=e.clientY;
+
+        windowElement.style.top=
+            (windowElement.offsetTop-y)+"px";
+
+        windowElement.style.left=
+            (windowElement.offsetLeft-x)+"px";
+
+    }
+
+    function stopDrag(){
+
+        document.onmouseup=null;
+        document.onmousemove=null;
+
+    }
+
+}
+// ==========================================
+// PART 3 - SETTINGS + FILE EXPLORER
+// ==========================================
+
+// ------------------------------
+// WALLPAPER BUTTONS
+// ------------------------------
+
+const wallpaperButtons =
+document.querySelectorAll(".wallpaperBtn");
+
+wallpaperButtons.forEach(button=>{
+
+    button.onclick=function(){
+
+        const wallpaper=this.dataset.wall;
+
+        switch(wallpaper){
+
+            case "pink":
+
+                document.body.style.backgroundImage =
+                "url('pink.jpg')";
+                break;
+
+            case "anime":
+
+                document.body.style.backgroundImage =
+                "url('anime.jpg')";
+                break;
+
+            case "live":
+
+                document.body.style.backgroundImage =
+                "url('dg7egt3-c4e91a6d-c40c-43f2-b256-7466bcc9a126.gif')";
+                break;
+
+        }
+
+        localStorage.setItem(
+            "waguriWallpaper",
+            document.body.style.backgroundImage
+        );
+
+        notify(
+            "Wallpaper Changed",
+            "Wallpaper updated successfully."
+        );
+
+    };
+
+});
+
+// ------------------------------
+// LOAD SAVED WALLPAPER
+// ------------------------------
 
 const savedWallpaper =
 localStorage.getItem("waguriWallpaper");
@@ -292,55 +643,18 @@ localStorage.getItem("waguriWallpaper");
 if(savedWallpaper){
 
     document.body.style.backgroundImage =
-    `url('${savedWallpaper}')`;
+    savedWallpaper;
 
 }
 
-
-// Built-in wallpaper buttons
-
-wallpaperButtons.forEach(button=>{
-
-    button.onclick=function(){
-
-        let wallpaper="";
-
-        switch(this.dataset.wall){
-
-            case "pink":
-
-                wallpaper="pink.jpg";
-
-                break;
-
-            case "anime":
-
-                wallpaper="anime.jpg";
-
-                break;
-
-            case "live":
-
-                wallpaper="dg7egt3-c4e91a6d-c40c-43f2-b256-7466bcc9a126.gif";
-
-                break;
-
-        }
-
-        document.body.style.backgroundImage =
-        `url('${wallpaper}')`;
-
-        localStorage.setItem(
-            "waguriWallpaper",
-            wallpaper
-        );
-
-    };
-
-});
-// ===============================
+// ------------------------------
 // CUSTOM WALLPAPER
-// ===============================
+// ------------------------------
+
+const wallpaperUpload =
+document.getElementById("wallpaperUpload");
+
+if(wallpaperUpload){
 
 wallpaperUpload.addEventListener("change",function(e){
 
@@ -348,29 +662,45 @@ wallpaperUpload.addEventListener("change",function(e){
 
     if(!file) return;
 
-    const imageURL=URL.createObjectURL(file);
+    const imageURL=
+    URL.createObjectURL(file);
 
     document.body.style.backgroundImage=
     `url(${imageURL})`;
 
+    localStorage.setItem(
+        "waguriWallpaper",
+        `url(${imageURL})`
+    );
+
+    notify(
+        "Wallpaper",
+        "Custom wallpaper applied."
+    );
+
 });
-// ===============================
+
+}
+
+// ==========================================
 // FILE EXPLORER
-// ===============================
+// ==========================================
 
-const imageUpload = document.getElementById("imageUpload");
-const gallery = document.getElementById("gallery");
+const imageUpload =
+document.getElementById("imageUpload");
 
-const photoViewer = document.getElementById("photoViewer");
-const photoMessage = document.getElementById("photoMessage");
+const gallery =
+document.getElementById("gallery");
 
-imageUpload.addEventListener("change", function(event){
+if(imageUpload){
 
-    const files = event.target.files;
+imageUpload.addEventListener("change",function(e){
 
-    for(let i = 0; i < files.length; i++){
+    const files=e.target.files;
 
-        const file = files[i];
+    for(let i=0;i<files.length;i++){
+
+        const file=files[i];
 
         if(!file.type.startsWith("image/")){
 
@@ -378,22 +708,17 @@ imageUpload.addEventListener("change", function(event){
 
         }
 
-        const imageURL = URL.createObjectURL(file);
+        const url=
+        URL.createObjectURL(file);
 
-        const img = document.createElement("img");
+        const img=
+        document.createElement("img");
 
-        img.src = imageURL;
+        img.src=url;
 
-        img.style.width = "100px";
-        img.style.height = "100px";
-        img.style.objectFit = "cover";
-        img.style.borderRadius = "10px";
-        img.style.cursor = "pointer";
-        img.style.border = "2px solid white";
+        img.onclick=function(){
 
-        img.onclick = function(){
-
-            openPhoto(imageURL);
+            openPhoto(url);
 
         };
 
@@ -401,53 +726,72 @@ imageUpload.addEventListener("change", function(event){
 
     }
 
+    notify(
+        "Files",
+        "Images imported successfully."
+    );
+
 });
-// ===============================
+
+}
+
+// ==========================================
 // PHOTO VIEWER
-// ===============================
+// ==========================================
+
+const photoViewer=
+document.getElementById("photoViewer");
+
+const photoMessage=
+document.getElementById("photoMessage");
 
 function openPhoto(image){
 
-    photosWindow.style.display = "block";
+    restoreWindow(photosWindow);
 
-    photoViewer.src = image;
+    photoViewer.src=image;
 
-    photoViewer.style.display = "block";
+    photoViewer.style.display="block";
 
-    photoMessage.style.display = "none";
+    photoMessage.style.display="none";
 
 }
-// ===============================
-// START MENU
-// ===============================
 
-const startButton =
+// ==========================================
+// START MENU
+// ==========================================
+
+const startButton=
 document.getElementById("startButton");
 
-const startMenu =
+const startMenu=
 document.getElementById("startMenu");
 
-startButton.onclick = function(){
+if(startButton){
 
-    if(startMenu.style.display === "block"){
+startButton.onclick=function(){
 
-        startMenu.style.display = "none";
+    if(startMenu.style.display==="block"){
+
+        startMenu.style.display="none";
 
     }
 
     else{
 
-        startMenu.style.display = "block";
+        startMenu.style.display="block";
 
     }
 
 };
 
+}
+
 document.addEventListener("click",function(e){
 
     if(
         !startMenu.contains(e.target) &&
-        e.target !== startButton
+        !startButton.contains(e.target)
     ){
 
         startMenu.style.display="none";
@@ -455,170 +799,235 @@ document.addEventListener("click",function(e){
     }
 
 });
-function shutdownSystem(){
 
-    if(shutdownSound){
+// ==========================================
+// SEARCH BAR
+// ==========================================
 
-        shutdownSound.currentTime = 0;
-        shutdownSound.play().catch(()=>{});
+const startSearch=
+document.getElementById("startSearch");
+
+if(startSearch){
+
+startSearch.addEventListener("keyup",function(){
+
+    const value=
+    this.value.toLowerCase();
+
+    const buttons=
+    startMenu.querySelectorAll("button");
+
+    buttons.forEach(btn=>{
+
+        btn.style.display=
+        btn.innerText.toLowerCase().includes(value)
+        ? "block"
+        : "none";
+
+    });
+
+});
+
+}
+
+// ==========================================
+// SHUTDOWN BUTTON
+// ==========================================
+
+const shutdownButton=
+document.getElementById("shutdownButton");
+
+if(shutdownButton){
+
+shutdownButton.onclick=function(){
+
+    shutdownOS();
+
+};
+
+}
+
+console.log("🌸 Waguri OS Loaded Successfully");
+// ==========================================
+// PART 4 - POLISH & DESKTOP FEATURES
+// ==========================================
+
+// ------------------------------
+// RIGHT CLICK MENU
+// ------------------------------
+
+const desktopMenu = document.getElementById("desktopMenu");
+const openSettingsMenu = document.getElementById("openSettingsMenu");
+const refreshDesktop = document.getElementById("refreshDesktop");
+const changeWallpaperMenu = document.getElementById("changeWallpaperMenu");
+
+document.addEventListener("contextmenu", function(e){
+
+    if(e.target.closest("#desktop")){
+
+        e.preventDefault();
+
+        desktopMenu.style.display = "block";
+
+        desktopMenu.style.left = e.pageX + "px";
+        desktopMenu.style.top = e.pageY + "px";
 
     }
 
-    shutdownScreen.style.display = "flex";
+});
 
-    document.getElementById("taskbar").style.display = "none";
+document.addEventListener("click", function(){
 
-    myWindow.style.display = "none";
+    desktopMenu.style.display = "none";
 
-    settingsWindow.style.display = "none";
-    filesWindow.style.display = "none";
-    photosWindow.style.display = "none";
+});
+
+if(openSettingsMenu){
+
+    openSettingsMenu.onclick = function(){
+
+        restoreWindow(settingsWindow);
+
+    };
 
 }
 
-menuShutdown.onclick = shutdownSystem;
-// ===============================
-// APP STATE
-// ===============================
+if(changeWallpaperMenu){
 
-const apps = {
+    changeWallpaperMenu.onclick = function(){
 
-    about: {
-        window: myWindow,
-        opened: true
-    },
+        restoreWindow(settingsWindow);
 
-    settings: {
-        window: settingsWindow,
-        opened: false
-    },
+    };
 
-    files: {
-        window: filesWindow,
-        opened: false
-    },
+}
 
-    photos: {
-        window: photosWindow,
-        opened: false
+if(refreshDesktop){
+
+    refreshDesktop.onclick = function(){
+
+        notify(
+            "Desktop",
+            "Desktop refreshed successfully."
+        );
+
+    };
+
+}
+
+// ------------------------------
+// WINDOW FOCUS
+// ------------------------------
+
+let highestZ = 10;
+
+document.querySelectorAll(".window").forEach(win=>{
+
+    win.addEventListener("mousedown", function(){
+
+        highestZ++;
+
+        this.style.zIndex = highestZ;
+
+    });
+
+});
+
+// ------------------------------
+// RECYCLE BIN
+// ------------------------------
+
+const recycleBin = document.getElementById("recycleBin");
+
+if(recycleBin){
+
+    recycleBin.onclick = function(){
+
+        notify(
+            "Recycle Bin",
+            "The Recycle Bin is currently empty."
+        );
+
+    };
+
+}
+
+// ------------------------------
+// KEYBOARD SHORTCUTS
+// ------------------------------
+
+document.addEventListener("keydown", function(e){
+
+    // ESC closes Start Menu
+    if(e.key === "Escape"){
+
+        if(startMenu){
+
+            startMenu.style.display = "none";
+
+        }
+
     }
 
-};
-// ===============================
-// APP FUNCTIONS
-// ===============================
+    // Ctrl + Alt + S
+    if(e.ctrlKey && e.altKey && e.key.toLowerCase() === "s"){
 
-function showApp(app){
-
-    app.window.style.display = "block";
-    app.window.style.visibility = "visible";
-
-    app.opened = true;
-
-}
-
-function hideApp(app){
-
-    app.window.style.visibility = "hidden";
-
-}
-
-function closeApp(app){
-
-    app.window.style.display = "none";
-
-    app.opened = false;
-
-}
-
-function toggleApp(app){
-
-    if(!app.opened){
-
-        showApp(app);
-
-        return;
+        restoreWindow(settingsWindow);
 
     }
 
-    if(app.window.style.visibility === "hidden"){
+    // Ctrl + Alt + F
+    if(e.ctrlKey && e.altKey && e.key.toLowerCase() === "f"){
 
-        app.window.style.visibility = "visible";
-
-    }
-
-    else{
-
-        app.window.style.visibility = "hidden";
+        restoreWindow(filesWindow);
 
     }
 
-}
-function openNova(){
+    // Ctrl + Alt + A
+    if(e.ctrlKey && e.altKey && e.key.toLowerCase() === "a"){
 
-    showApp(apps.about);
+        restoreWindow(myWindow);
 
-}
+    }
 
-aboutIcon.onclick = function(){
+});
 
-    toggleApp(apps.about);
+// ------------------------------
+// DESKTOP DOUBLE CLICK
+// ------------------------------
 
-};
+document.getElementById("desktop").addEventListener("dblclick", function(){
 
-desktopAbout.onclick = openNova;
+    notify(
+        "Desktop",
+        "Welcome to Waguri OS 🌸"
+    );
 
-minimizeBtn.onclick = function(){
+});
 
-    hideApp(apps.about);
+// ------------------------------
+// STARTUP POLISH
+// ------------------------------
 
-};
+window.addEventListener("load", function(){
 
-closeBtn.onclick = function(){
+    console.log("🌸 Waguri OS v2");
 
-    closeApp(apps.about);
+    console.log("Status: Online");
 
-};
-function openSettings(){
+    console.log("Desktop Loaded");
 
-    showApp(apps.settings);
+});
 
-}
+// ------------------------------
+// OPTIONAL: F11 REMINDER
+// ------------------------------
 
-settingsIcon.onclick = function(){
+setTimeout(function(){
 
-    toggleApp(apps.settings);
+    notify(
+        "Tip",
+        "Press F11 for full-screen mode."
+    );
 
-};
-
-desktopSettings.onclick = openSettings;
-
-settingsClose.onclick = function(){
-
-    closeApp(apps.settings);
-
-};
-function openFiles(){
-
-    showApp(apps.files);
-
-}
-
-filesIcon.onclick = function(){
-
-    toggleApp(apps.files);
-
-};
-
-desktopFiles.onclick = openFiles;
-
-filesClose.onclick = function(){
-
-    closeApp(apps.files);
-
-};
-photosClose.onclick = function(){
-
-    closeApp(apps.photos);
-
-};
+}, 5000);
