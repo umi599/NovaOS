@@ -7,7 +7,6 @@ Waguri OS is based on the girlfriend from The Fragant Flower Blooms With Diginit
         -> Live Wallpaper
         -> Draggable Windows
         -> Working time
-        -> Working date
         -> Work greetting through out the day
         -> Working username maker
         -> Working boot screen
