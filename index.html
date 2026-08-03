@@ -57,7 +57,7 @@ margin-bottom:20px;
 <input
 id="username"
 type="text"
-placeholder="Your Name"
+placeholder="Your Nickname"
 style="
 width:280px;
 padding:12px;
@@ -316,6 +316,7 @@ font-weight:bold;
 
 </div>
 
+
 <!-- WINDOW BODY -->
 
 <div style="
@@ -363,8 +364,8 @@ YouTube
 
 </div>
 
-<audio id="bootSound" src="47313572-startup-sound-variation-6-316850.mp3"></audio>
-
+<audio id="bootSound" src="StartupSound.mp3"></audio>
+<audio id="shutdownSound" src="Shutdown.mp3"></audio>
 <script>
 // ======================================
 // USER SETUP
@@ -647,7 +648,20 @@ openBtn.onclick=openNova;
 
 const shutdownBtn=document.getElementById("shutdownBtn");
 
+const shutdownSound = document.getElementById("shutdownSound");
+
+
 shutdownBtn.onclick=function(){
+
+
+if(shutdownSound){
+
+    shutdownSound.currentTime = 0;
+
+    shutdownSound.play().catch(()=>{});
+
+}
+
 
 const shutdown=document.createElement("div");
 
